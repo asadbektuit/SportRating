@@ -18,6 +18,4 @@ public class District {
 
     private String name;
 
-
-
 }
