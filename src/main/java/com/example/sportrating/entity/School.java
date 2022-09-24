@@ -18,8 +18,16 @@ public class School {
 
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = ("region_id"), insertable = false, updatable = false)
+    private Region region;
+
     @Column(name = ("region_id"))
     private Integer regionId;
+
+    @ManyToOne
+    @JoinColumn(name = ("district_id"), insertable = false, updatable = false)
+    private District district;
 
     @Column(name = ("district_id"))
     private Integer districtId;

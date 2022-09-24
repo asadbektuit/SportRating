@@ -12,10 +12,13 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = ("districts"))
 public class District {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = ("region_id"), insertable = false, updatable = false)
+    private Region region;
 
     @Column(name = ("region_id"))
     private Integer regionId;

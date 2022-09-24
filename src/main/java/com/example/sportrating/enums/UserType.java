@@ -1,4 +1,4 @@
-package com.example.sportrating.entity;
+package com.example.sportrating.enums;
 
 public enum UserType {
     STUDENT,

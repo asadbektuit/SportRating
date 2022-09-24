@@ -1,5 +1,6 @@
 package com.example.sportrating.entity;
 
+import com.example.sportrating.enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 

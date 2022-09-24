@@ -1,5 +1,6 @@
 package com.example.sportrating.entity;
 
+import com.example.sportrating.enums.MedalTypes;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,12 +10,12 @@ import javax.persistence.*;
 @Setter
 
 @Entity
-@Table(name = ("sport-types"))
-public class SportType {
-
+@Table(name = ("achievements"))
+public class Achievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Column(name = ("medal_types"))
+    private MedalTypes medalTypes;
 }
