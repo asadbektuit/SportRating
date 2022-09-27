@@ -33,9 +33,15 @@ public class SchoolService {
 
     public SchoolDto create(SchoolDto dto) {
         School school = new School();
-        school.setName(dto.getName());
+        //TODO: check region
+        regionService.getEntity(dto.getRegionId());
         school.setRegionId(dto.getRegionId());
+
+        //TODO: check district
+        districtService.getEntity(dto.getDistrictId());
         school.setDistrictId(dto.getDistrictId());
+
+        school.setName(dto.getName());
         school.setCreatedAt(LocalDateTime.now());
         schoolRepository.save(school);
         return dto;
@@ -43,9 +49,15 @@ public class SchoolService {
 
     public boolean update(Integer id, SchoolDto dto) {
         School school = getEntity(id);
-        school.setName(dto.getName());
+        //TODO: check region
+        regionService.getEntity(dto.getRegionId());
         school.setRegionId(dto.getRegionId());
+
+        //TODO: check district
+        districtService.getEntity(dto.getDistrictId());
         school.setDistrictId(dto.getDistrictId());
+
+        school.setName(dto.getName());
         school.setUpdatedAt(LocalDateTime.now());
         schoolRepository.save(school);
         return true;

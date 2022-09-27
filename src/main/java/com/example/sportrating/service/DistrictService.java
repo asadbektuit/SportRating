@@ -29,7 +29,7 @@ public class DistrictService {
 
     public DistrictDto create(DistrictDto dto) {
         District district = new District();
-        //:TODO check region
+        //TODO: check region
         regionService.getEntity(dto.getRegionId());
         district.setRegionId(dto.getRegionId());
 
