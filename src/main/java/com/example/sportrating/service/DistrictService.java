@@ -16,28 +16,24 @@ public class DistrictService {
     @Autowired
     private DistrictRepository districtRepository;
 
+    @Autowired
+    private RegionService regionService;
+
     public DistrictDto get(Integer id) {
         District district = getEntity(id);
         DistrictDto dto = new DistrictDto();
         dto.setName(district.getName());
-        dto.setRegion(district.getRegion());
-        dto.setRegionId(district.getRegionId());
+        dto.setRegion(regionService.get(dto.getRegionId()));
         return dto;
-    }
-
-    private District getEntity(Integer id) {
-        Optional<District> optional = districtRepository.findByIdAndDeletedAtIsNull(id);
-        if (optional.isEmpty()){
-            throw new BadRequest("District not found");
-        }
-        return optional.get();
     }
 
     public DistrictDto create(DistrictDto dto) {
         District district = new District();
-        district.setName(dto.getName());
-        district.setRegion(dto.getRegion());
+        //:TODO check region
+        regionService.getEntity(dto.getRegionId());
         district.setRegionId(dto.getRegionId());
+
+        district.setName(dto.getName());
         district.setCreatedAt(LocalDateTime.now());
         districtRepository.save(district);
         return dto;
@@ -45,9 +41,11 @@ public class DistrictService {
 
     public boolean update(Integer id, DistrictDto dto) {
         District district = getEntity(id);
-        district.setName(dto.getName());
-        district.setRegion(dto.getRegion());
+        //:TODO check region
+        regionService.getEntity(dto.getRegionId());
         district.setRegionId(dto.getRegionId());
+
+        district.setName(dto.getName());
         district.setUpdatedAt(LocalDateTime.now());
         districtRepository.save(district);
         return true;
@@ -58,5 +56,13 @@ public class DistrictService {
         district.setDeletedAt(LocalDateTime.now());
         districtRepository.save(district);
         return true;
+    }
+
+    public District getEntity(Integer id) {
+        Optional<District> optional = districtRepository.findByIdAndDeletedAtIsNull(id);
+        if (optional.isEmpty()){
+            throw new BadRequest("District not found");
+        }
+        return optional.get();
     }
 }

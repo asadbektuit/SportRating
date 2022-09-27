@@ -23,14 +23,6 @@ public class RegionService {
         return dto;
     }
 
-    private Region getEntity(Integer id) {
-        Optional<Region> optional = regionRepository.findByIdAndDeletedAtIsNull(id);
-        if (optional.isEmpty()){
-            throw new BadRequest("Region not found");
-        }
-        return optional.get();
-    }
-
     public RegionDto create(RegionDto dto) {
         Region region = new Region();
         region.setName(dto.getName());
@@ -50,6 +42,15 @@ public class RegionService {
     public boolean delete(Integer id)  {
         Region region = getEntity(id);
         region.setDeletedAt(LocalDateTime.now());
+        regionRepository.save(region);
         return true;
+    }
+
+    public Region getEntity(Integer id) {
+        Optional<Region> optional = regionRepository.findByIdAndDeletedAtIsNull(id);
+        if (optional.isEmpty()){
+            throw new BadRequest("Region not found");
+        }
+        return optional.get();
     }
 }

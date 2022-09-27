@@ -21,14 +21,6 @@ public class AchievementService {
         return dto;
     }
 
-    private Achievement getEntity(Integer id) {
-        Optional<Achievement> optional = achievementRepository.findByIdAndDeletedAtIsNull(id);
-        if (optional.isEmpty()){
-            throw new BadRequest("Achievement not found");
-        }
-        return optional.get();
-    }
-
     public AchievementDto create(AchievementDto dto) {
         return null;
     }
@@ -39,5 +31,13 @@ public class AchievementService {
 
     public boolean delete(Integer id) {
         return false;
+    }
+
+    public Achievement getEntity(Integer id) {
+        Optional<Achievement> optional = achievementRepository.findByIdAndDeletedAtIsNull(id);
+        if (optional.isEmpty()){
+            throw new BadRequest("Achievement not found");
+        }
+        return optional.get();
     }
 }

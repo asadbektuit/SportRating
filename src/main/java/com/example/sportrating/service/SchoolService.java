@@ -16,21 +16,19 @@ public class SchoolService {
     @Autowired
     private SchoolRepository schoolRepository;
 
+    @Autowired
+    private DistrictService districtService;
+
+    @Autowired
+    private RegionService regionService;
+
     public SchoolDto get(Integer id) {
         School school = getEntity(id);
         SchoolDto dto = new SchoolDto();
         dto.setName(school.getName());
-        dto.setRegionId(school.getRegionId());
-        dto.setDistrictId(school.getDistrictId());
+        dto.setRegion(regionService.get(dto.getRegionId()));
+        dto.setDistrict(districtService.get(dto.getDistrictId()));
         return dto;
-    }
-
-    private School getEntity(Integer id) {
-        Optional<School> optional = schoolRepository.findByIdAndDeletedAtIsNull(id);
-        if(optional.isEmpty()){
-            throw new BadRequest("School not found");
-        }
-        return optional.get();
     }
 
     public SchoolDto create(SchoolDto dto) {
@@ -58,5 +56,13 @@ public class SchoolService {
         school.setDeletedAt(LocalDateTime.now());
         schoolRepository.save(school);
         return true;
+    }
+
+    public School getEntity(Integer id) {
+        Optional<School> optional = schoolRepository.findByIdAndDeletedAtIsNull(id);
+        if(optional.isEmpty()){
+            throw new BadRequest("School not found");
+        }
+        return optional.get();
     }
 }
