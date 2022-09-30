@@ -17,8 +17,19 @@ public class Achievement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = ("sport_type_id"), insertable = false, updatable = false)
+    private SportType sportType;
 
+    @Column(name = ("sport_type_id"))
+    private Integer sportTypeId;
+
+    @ManyToOne
+    @JoinColumn(name = ("user_id"), insertable = false, updatable = false)
+    private User user;
+
+    @Column(name = ("user_id"))
+    private Integer userId;
 
     @Column(name = ("medal_types"))
     private MedalTypes medalTypes;

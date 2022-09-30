@@ -7,6 +7,7 @@ import com.example.sportrating.repository.AchievementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -15,22 +16,58 @@ public class AchievementService {
     @Autowired
     private AchievementRepository achievementRepository;
 
+    @Autowired
+    private SportTypeService sportTypeService;
+
+    @Autowired
+    private UserService userService;
+
     public AchievementDto get(Integer id) {
         Achievement achievement = getEntity(id);
         AchievementDto dto = new AchievementDto();
+        dto.setMedalTypes(achievement.getMedalTypes());
+        dto.setSportType(sportTypeService.get(dto.getSportTypeId()));
+        dto.setUser(userService.get(dto.getUserId()));
         return dto;
     }
 
     public AchievementDto create(AchievementDto dto) {
-        return null;
+        Achievement achievement = new Achievement();
+        //TODO: check sportType
+        sportTypeService.getEntity(dto.getSportTypeId());
+        achievement.setSportTypeId(dto.getSportTypeId());
+
+        //TODO: check user
+        userService.getEntity(dto.getUserId());
+        achievement.setUserId(dto.getUserId());
+
+        achievement.setMedalTypes(dto.getMedalTypes());
+        achievement.setCreatedAt(LocalDateTime.now());
+        achievementRepository.save(achievement);
+        return dto;
     }
 
     public boolean update(Integer id, AchievementDto dto) {
-        return false;
+        Achievement achievement = getEntity(id);
+        //TODO: check sportType
+        sportTypeService.getEntity(dto.getSportTypeId());
+        achievement.setSportTypeId(dto.getSportTypeId());
+
+        //TODO: check user
+        userService.getEntity(dto.getUserId());
+        achievement.setUserId(dto.getUserId());
+
+        achievement.setMedalTypes(dto.getMedalTypes());
+        achievement.setUpdatedAt(LocalDateTime.now());
+        achievementRepository.save(achievement);
+        return true;
     }
 
     public boolean delete(Integer id) {
-        return false;
+        Achievement achievement = getEntity(id);
+        achievement.setDeletedAt(LocalDateTime.now());
+        achievementRepository.save(achievement);
+        return true;
     }
 
     public Achievement getEntity(Integer id) {

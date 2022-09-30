@@ -1,5 +1,6 @@
 package com.example.sportrating.dto;
 
+import com.example.sportrating.enums.UserType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +12,13 @@ import java.time.LocalDateTime;
 
 public class UserDto {
     private Integer id;
+    private UserType userType;
     private String phone;
     private String password;
     private String firstName;
     private String lastName;
     private LocalDate birth;
-    private String adress;
+    private String address;
     private SchoolDto school;
     private Integer schoolId;
     private DistrictDto district;
