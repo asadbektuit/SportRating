@@ -27,8 +27,11 @@ public class RegionService {
         Region region = new Region();
         region.setName(dto.getName());
         region.setCreatedAt(LocalDateTime.now());
-        regionRepository.save(region);
-        return dto;
+        Region savedRegion = regionRepository.save(region);
+        return RegionDto.builder().id(savedRegion.getId())
+                .createdAt(savedRegion.getCreatedAt())
+                .name(savedRegion.getName())
+                .updatedAt(savedRegion.getUpdatedAt()).build();
     }
 
     public boolean update(Integer id, RegionDto dto) {
